@@ -10,6 +10,14 @@ public struct HTTPResponse {
     }
     
     public var headers: [AnyHashable: Any] { response.allHeaderFields }
+    
+    public init(request: HTTPRequestable,
+                response: HTTPURLResponse,
+                body: Data?) {
+        self.request = request
+        self.response = response
+        self.body = body
+    }
 }
 
 public struct HTTPResponseStatus: ExpressibleByIntegerLiteral, RawRepresentable {

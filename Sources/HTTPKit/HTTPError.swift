@@ -30,7 +30,6 @@ public struct HTTPError: Error {
         self.response = response
         self.underlyingError = underlyingError
     }
-    
 }
 
 extension HTTPError: CustomStringConvertible {
@@ -60,5 +59,4 @@ extension HTTPError: CustomStringConvertible {
         }
         return body
     }
-    
 }

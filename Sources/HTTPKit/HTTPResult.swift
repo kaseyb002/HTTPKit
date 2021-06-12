@@ -57,7 +57,6 @@ internal extension HTTPResult {
             case .userCancelledAuthentication:
                 self = .failure(HTTPError(code: .cancelled, request: request, response: httpResponse, underlyingError: e))
                 
-            case .appTransportSecurityRequiresSecureConnection: fallthrough
             case .secureConnectionFailed: fallthrough
             case .serverCertificateHasBadDate: fallthrough
             case .serverCertificateUntrusted: fallthrough

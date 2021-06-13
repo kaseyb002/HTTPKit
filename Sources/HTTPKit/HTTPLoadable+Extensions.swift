@@ -26,4 +26,12 @@ extension HTTPLoadable {
             }
         }
     }
+    
+    @available(macOS 12.0, *)
+    @available(iOS 15.0, *)
+    public func sendTyped<R: TypedHTTPRequestable> (_ request: R) async throws -> R.ResponseType {
+        let response = try await send(request)
+        let data = try request.parse(response)
+        return data
+    }
 }

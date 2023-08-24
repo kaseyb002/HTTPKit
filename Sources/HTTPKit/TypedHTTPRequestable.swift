@@ -7,7 +7,6 @@ public protocol TypedHTTPRequestable: HTTPRequestable {
 }
 
 extension TypedHTTPRequestable where ResponseType: Decodable {
-    
     public func parse(_ response: HTTPResponse) throws -> ResponseType {
         guard let data = response.body, data.isEmpty == false else {
             throw HTTPError(code: .cannotDecodeResponse, request: response.request)

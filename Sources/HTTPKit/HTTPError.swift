@@ -1,7 +1,6 @@
 import Foundation
 
 public struct HTTPError: Error {
-    
     public enum Code {
         case invalidRequest
         case cannotConnect
@@ -21,10 +20,12 @@ public struct HTTPError: Error {
     public let response: HTTPResponse?
     public let underlyingError: Error?
     
-    public init(code: Code,
-                request: HTTPRequestable,
-                response: HTTPResponse? = nil,
-                underlyingError: Error? = nil) {
+    public init(
+        code: Code,
+        request: HTTPRequestable,
+        response: HTTPResponse? = nil,
+        underlyingError: Error? = nil
+    ) {
         self.code = code
         self.request = request
         self.response = response
@@ -33,7 +34,6 @@ public struct HTTPError: Error {
 }
 
 extension HTTPError: CustomStringConvertible {
-    
     public var description: String {
         let name: String
         switch code {

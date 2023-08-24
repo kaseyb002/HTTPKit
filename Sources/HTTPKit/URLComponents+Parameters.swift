@@ -1,7 +1,6 @@
 import Foundation
 
 public extension URLComponents {
-    
     mutating func setQueryItems(for values: [String: String?]) {
         var parameters: [URLQueryItem] = queryItems ?? []
         for (name, value) in values {

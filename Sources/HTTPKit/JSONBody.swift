@@ -8,8 +8,10 @@ public struct JSONBody: HTTPBody {
     
     private let encodeClosure: () throws -> Data
     
-    public init<T: Encodable>(_ value: T,
-                              encoder: JSONEncoder = JSONEncoder()) {
+    public init<T: Encodable>(
+        _ value: T,
+        encoder: JSONEncoder = JSONEncoder()
+    ) {
         self.encodeClosure = { try encoder.encode(value) }
     }
     

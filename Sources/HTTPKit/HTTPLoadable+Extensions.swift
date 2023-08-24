@@ -2,7 +2,6 @@ import Foundation
 
 // MARK: Typed Requests
 extension HTTPLoadable {
-    
     @discardableResult
     public func sendTyped<R: TypedHTTPRequestable> (
         _ request: R,
@@ -15,10 +14,12 @@ extension HTTPLoadable {
                     let data = try request.parse(response)
                     callback(.success(data))
                 } catch let error {
-                    let httpError = HTTPError(code: .invalidResponse,
-                                              request: request,
-                                              response: response,
-                                              underlyingError: error)
+                    let httpError = HTTPError(
+                        code: .invalidResponse,
+                        request: request,
+                        response: response,
+                        underlyingError: error
+                    )
                     callback(.failure(httpError))
                 }
             case .failure(let error):

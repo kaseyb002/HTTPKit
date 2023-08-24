@@ -1,25 +1,22 @@
 import Foundation
 
 extension URLSession: HTTPLoadable {
-    
     @available(macOS 12.0, *)
     @available(iOS 15.0, *)
     public func send(_ request: HTTPRequestable) async throws -> HTTPResponse {
-        guard let url = request.url else {
-            throw HTTPError(code: .invalidRequest, request: request)
-        }
-        
-        var urlRequest = URLRequest(url: url,
-                                    cachePolicy: request.cachePolicy,
-                                    timeoutInterval: request.timeoutInterval)
+        var urlRequest = URLRequest(
+            url: request.url,
+            cachePolicy: request.cachePolicy,
+            timeoutInterval: request.timeoutInterval
+        )
         
         urlRequest.httpMethod = request.method.rawValue
         
         for (header, value) in request.headers {
             urlRequest.addValue(value, forHTTPHeaderField: header)
         }
+        
         if let body = request.body, body.isEmpty == false {
-            
             for (header, value) in body.additionalHeaders {
                 urlRequest.addValue(value, forHTTPHeaderField: header)
             }
@@ -34,9 +31,19 @@ extension URLSession: HTTPLoadable {
         let result: HTTPResult
         do {
             let (data, urlResponse) = try await data(for: urlRequest)
-            result = HTTPResult(request: request, responseData: data, response: urlResponse, error: nil)
+            result = HTTPResult(
+                request: request,
+                responseData: data,
+                response: urlResponse,
+                error: nil
+            )
         } catch let error {
-            result = HTTPResult(request: request, responseData: nil, response: nil, error: error)
+            result = HTTPResult(
+                request: request,
+                responseData: nil,
+                response: nil,
+                error: error
+            )
         }
         
         switch result {
@@ -47,16 +54,15 @@ extension URLSession: HTTPLoadable {
         }
     }
     
-    public func send(_ request: HTTPRequestable,
-                     callback: @escaping (HTTPResult) -> ()) -> Cancellable? {
-        guard let url = request.url else {
-            callback(.failure(.init(code: .invalidRequest, request: request)))
-            return nil
-        }
-        
-        var urlRequest = URLRequest(url: url,
-                                    cachePolicy: request.cachePolicy,
-                                    timeoutInterval: request.timeoutInterval)
+    public func send(
+        _ request: HTTPRequestable,
+        callback: @escaping (HTTPResult) -> ()
+    ) -> Cancellable? {
+        var urlRequest = URLRequest(
+            url: request.url,
+            cachePolicy: request.cachePolicy,
+            timeoutInterval: request.timeoutInterval
+        )
         
         urlRequest.httpMethod = request.method.rawValue
         
@@ -65,7 +71,6 @@ extension URLSession: HTTPLoadable {
         }
         
         if let body = request.body, body.isEmpty == false {
-            
             for (header, value) in body.additionalHeaders {
                 urlRequest.addValue(value, forHTTPHeaderField: header)
             }
@@ -79,10 +84,12 @@ extension URLSession: HTTPLoadable {
         }
         
         let dataTask = self.dataTask(with: urlRequest) { data, response, error in
-            let result = HTTPResult(request: request,
+            let result = HTTPResult(
+                request: request,
                                     responseData: data,
                                     response: response,
-                                    error: error)
+                                    error: error
+            )
             callback(result)
         }
         

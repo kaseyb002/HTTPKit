@@ -3,7 +3,6 @@ import Foundation
 public typealias HTTPResult = Result<HTTPResponse, HTTPError>
 
 extension HTTPResult {
-    
     public var request: HTTPRequestable {
         switch self {
             case .success(let response): return response.request
@@ -20,8 +19,12 @@ extension HTTPResult {
 }
 
 internal extension HTTPResult {
-    
-    init(request: HTTPRequestable, responseData: Data?, response: URLResponse?, error: Error?) {
+    init(
+        request: HTTPRequestable,
+        responseData: Data?,
+        response: URLResponse?,
+        error: Error?
+    ) {
         var httpResponse: HTTPResponse?
         
         if let r = response as? HTTPURLResponse {

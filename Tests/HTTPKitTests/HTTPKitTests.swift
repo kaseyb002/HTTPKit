@@ -2,16 +2,6 @@ import XCTest
 @testable import HTTPKit
 
 final class HTTPKitTests: XCTestCase {
-    
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    
     func testCharacter() {
         let expectation = XCTestExpectation()
         let request = StarWarsCharacterRequest(personId: "1")
@@ -48,25 +38,34 @@ final class HTTPKitTests: XCTestCase {
     }
 }
 
-protocol StarWarsRequest {
-    var address: String { get }
+protocol StarWarsRequest: HTTPRequestable {
+    var endpoint: String { get }
 }
 
 extension StarWarsRequest {
-    var baseUrl: String { "https://swapi.dev/api" }
-    var path: String { baseUrl + address }
+    var url: URL {
+        let baseURL = URL(string: "https://swapi.dev/api/")!
+        var urlComponents = URLComponents(
+            url: baseURL.appendingPathComponent(endpoint),
+            resolvingAgainstBaseURL: true
+        )!
+        urlComponents.queryItems = [
+            URLQueryItem(name: "format", value: "json"),
+        ]
+        return urlComponents.url!
+    }
 }
 
 struct StarWarsCharacterListRequest: TypedHTTPRequestable, StarWarsRequest {
     typealias ResponseType = StarWarsCharacterList
-    var address: String { "/people" }
+    var endpoint: String { "people" }
 }
 
 struct StarWarsCharacterRequest: TypedHTTPRequestable, StarWarsRequest {
     typealias ResponseType = StarWarsCharacter
     
     let personId: String
-    var address: String { "/people/\(personId)" }
+    var endpoint: String { "people/\(personId)" }
 }
 
 struct StarWarsCharacterList: Decodable {

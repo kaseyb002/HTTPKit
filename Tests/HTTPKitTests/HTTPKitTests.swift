@@ -43,7 +43,7 @@ protocol StarWarsRequest: HTTPRequestable {
 }
 
 extension StarWarsRequest {
-    var url: URL {
+    var url: URL? {
         let baseURL = URL(string: "https://swapi.dev/api/")!
         var urlComponents = URLComponents(
             url: baseURL.appendingPathComponent(endpoint),
@@ -52,7 +52,7 @@ extension StarWarsRequest {
         urlComponents.queryItems = [
             URLQueryItem(name: "format", value: "json"),
         ]
-        return urlComponents.url!
+        return urlComponents.url
     }
 }
 

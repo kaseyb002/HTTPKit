@@ -4,8 +4,12 @@ extension URLSession: HTTPLoadable {
     @available(macOS 12.0, *)
     @available(iOS 15.0, *)
     public func send(_ request: HTTPRequestable) async throws -> HTTPResponse {
+        guard let url = request.url else {
+            throw HTTPError(code: .invalidRequest, request: request)
+        }
+        
         var urlRequest = URLRequest(
-            url: request.url,
+            url: url,
             cachePolicy: request.cachePolicy,
             timeoutInterval: request.timeoutInterval
         )
@@ -58,8 +62,13 @@ extension URLSession: HTTPLoadable {
         _ request: HTTPRequestable,
         callback: @escaping (HTTPResult) -> ()
     ) -> Cancellable? {
+        guard let url = request.url else {
+            callback(.failure(HTTPError(code: .invalidRequest, request: request)))
+            return nil
+        }
+        
         var urlRequest = URLRequest(
-            url: request.url,
+            url: url,
             cachePolicy: request.cachePolicy,
             timeoutInterval: request.timeoutInterval
         )

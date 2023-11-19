@@ -3,6 +3,7 @@ import Foundation
 extension URLSession: HTTPLoadable {
     @available(macOS 12.0, *)
     @available(iOS 15.0, *)
+    @available(tvOS 15.0, *)
     public func send(_ request: HTTPRequestable) async throws -> HTTPResponse {
         guard let url = request.url else {
             throw HTTPError(code: .invalidRequest, request: request)

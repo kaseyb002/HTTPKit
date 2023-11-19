@@ -9,5 +9,6 @@ public protocol HTTPLoadable {
     
     @available(macOS 12.0, *)
     @available(iOS 15.0, *)
+    @available(tvOS 15.0, *)
     func send(_ request: HTTPRequestable) async throws -> HTTPResponse
 }

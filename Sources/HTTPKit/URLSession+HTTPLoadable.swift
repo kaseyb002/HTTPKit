@@ -53,7 +53,15 @@ extension URLSession: HTTPLoadable {
         
         switch result {
         case .success(let httpResponse):
-            return httpResponse
+            if httpResponse.status?.isClientError == true
+               ||
+               httpResponse.status?.isServerError == true
+            {
+                throw HTTPResponseError(response: httpResponse)
+            } else {
+                return httpResponse
+            }
+            
         case .failure(let httpError):
             throw httpError
         }
@@ -96,9 +104,9 @@ extension URLSession: HTTPLoadable {
         let dataTask = self.dataTask(with: urlRequest) { data, response, error in
             let result = HTTPResult(
                 request: request,
-                                    responseData: data,
-                                    response: response,
-                                    error: error
+                responseData: data,
+                response: response,
+                error: error
             )
             callback(result)
         }

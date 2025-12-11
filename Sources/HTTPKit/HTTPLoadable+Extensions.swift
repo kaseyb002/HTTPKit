@@ -5,7 +5,7 @@ extension HTTPLoadable {
     @discardableResult
     public func sendTyped<R: TypedHTTPRequestable> (
         _ request: R,
-        callback: @escaping (Result<R.ResponseType, HTTPError>) -> ()
+        callback: @Sendable @escaping (Result<R.ResponseType, HTTPError>) -> ()
     ) -> Cancellable? {
         send(request) { result in
             switch result {

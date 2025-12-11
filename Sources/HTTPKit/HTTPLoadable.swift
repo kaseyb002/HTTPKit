@@ -4,7 +4,7 @@ public protocol HTTPLoadable {
     @discardableResult
     func send(
         _ request: HTTPRequestable,
-        callback: @escaping (HTTPResult) -> ()
+        callback: @Sendable @escaping (HTTPResult) -> ()
     ) -> Cancellable?
     
     @available(macOS 12.0, *)

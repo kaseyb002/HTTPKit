@@ -8,7 +8,7 @@ public struct JSONBody: HTTPBody {
     
     private let encodeClosure: @Sendable () throws -> Data
     
-    public init<T: Encodable>(
+    public init<T: Encodable & Sendable>(
         _ value: T,
         encoder: JSONEncoder = JSONEncoder()
     ) {

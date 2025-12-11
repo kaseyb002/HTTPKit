@@ -69,7 +69,7 @@ extension URLSession: HTTPLoadable {
     
     public func send(
         _ request: HTTPRequestable,
-        callback: @escaping (HTTPResult) -> ()
+        callback: @Sendable @escaping (HTTPResult) -> ()
     ) -> Cancellable? {
         guard let url = request.url else {
             callback(.failure(HTTPError(code: .invalidRequest, request: request)))

@@ -1,6 +1,6 @@
 import Foundation
 
-public struct HTTPResponseError: Error {
+public struct HTTPResponseError: Error, Sendable {
     public let response: HTTPResponse
 
     public init(

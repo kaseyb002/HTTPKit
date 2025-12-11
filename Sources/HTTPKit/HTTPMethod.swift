@@ -1,6 +1,6 @@
 import Foundation
 
-public struct HTTPMethod: Hashable, RawRepresentable {
+public struct HTTPMethod: Hashable, RawRepresentable, Sendable {
     public static let get = HTTPMethod(rawValue: "GET")
     public static let post = HTTPMethod(rawValue: "POST")
     public static let put = HTTPMethod(rawValue: "PUT")

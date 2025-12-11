@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol HTTPRequestable {
+public protocol HTTPRequestable: Sendable {
     var url: URL? { get }
     var method: HTTPMethod { get }
     var headers: [String: String] { get }

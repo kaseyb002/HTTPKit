@@ -1,7 +1,7 @@
 import Foundation
 
-public struct HTTPError: Error {
-    public enum Code {
+public struct HTTPError: Error, Sendable {
+    public enum Code: Sendable {
         case invalidRequest
         case cannotConnect
         case cancelled

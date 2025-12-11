@@ -1,6 +1,6 @@
 import Foundation
 
-public struct HTTPResponse {
+public struct HTTPResponse: Sendable {
     public let request: HTTPRequestable
     public let response: HTTPURLResponse
     public let body: Data?
@@ -22,8 +22,8 @@ public struct HTTPResponse {
     }
 }
 
-public struct HTTPResponseStatus: ExpressibleByIntegerLiteral, RawRepresentable {
-    public enum Kind {
+public struct HTTPResponseStatus: ExpressibleByIntegerLiteral, RawRepresentable, Sendable {
+    public enum Kind: Sendable {
         case informational
         case success
         case redirect

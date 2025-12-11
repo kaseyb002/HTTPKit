@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol HTTPBody {
+public protocol HTTPBody: Sendable {
     var isEmpty: Bool { get }
     var additionalHeaders: [String: String] { get }
     func encode() throws -> Data

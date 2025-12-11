@@ -6,7 +6,7 @@ public struct JSONBody: HTTPBody {
         "Content-Type": "application/json; charset=utf-8"
     ]
     
-    private let encodeClosure: () throws -> Data
+    private let encodeClosure: @Sendable () throws -> Data
     
     public init<T: Encodable>(
         _ value: T,
